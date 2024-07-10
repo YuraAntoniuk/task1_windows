@@ -14,6 +14,11 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
+    /*
+     * @var array
+     */
+    protected $policies = [];
+
     /**
      * Bootstrap any application services.
      */
