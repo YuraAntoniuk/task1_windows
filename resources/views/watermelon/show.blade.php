@@ -21,13 +21,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header d-flex p-3">
-                            <div class="mr-3">
-                                <a href="{{route('watermelon.edit', $watermelon->id)}}" class="btn btn-primary">Updated</a>
+                            <div class="mr-3 col-1">
+                                <a href="{{route('watermelon.edit', $watermelon->id)}}" class="btn btn-primary">Update</a>
                             </div>
                             <form action="{{ route('watermelon.destroy', $watermelon->id) }}" method="post">
                                 @csrf
                                 @method('delete')
-                                <input type="submit" class="btn btn-danger" value="Видалити">
+                                <input type="submit" class="btn btn-danger" value="Delete">
                             </form>
                         </div>
 

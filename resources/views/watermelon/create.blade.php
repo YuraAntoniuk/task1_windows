@@ -20,23 +20,12 @@
             <div class="row">
                 <form action="{{route('watermelon.store')}}" method="post">
                     @csrf
-
-                    <div class="form-group">
-                        <input type="text" name="title" class="form-control" placeholder="Назва">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="description" class="form-control" placeholder="Опис">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="sort" class="form-control" placeholder="Сорт">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="price" class="form-control" placeholder="Ціна">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="country" class="form-control" placeholder="Країна">
-                    </div>
-                    <div class="form-group">
+                    <div class="form-group w-25">
+                        <input type="text" name="title" class="form-control" placeholder="Name"><br>
+                        <input type="text" name="description" class="form-control" placeholder="Description"><br>
+                        <input type="text" name="sort" class="form-control" placeholder="Sort"><br>
+                        <input type="text" name="price" class="form-control" placeholder="Price"><br>
+                        <input type="text" name="country" class="form-control" placeholder="Country"><br>
                         <input type="submit" class="btn btn-primary" value="Додати">
                     </div>
                 </form>

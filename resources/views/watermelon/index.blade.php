@@ -31,6 +31,7 @@
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Description</th>
+                                    <th>Sort</th>
                                     <th>Price</th>
                                     <th>Country</th>
                                 </tr>
