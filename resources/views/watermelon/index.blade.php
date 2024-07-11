@@ -28,6 +28,8 @@
                             <table class="table table-hover text-nowrap">
                                 <thead>
                                 <tr>
+                                    <th>Update</th>
+                                    <th>Delete</th>
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Description</th>
@@ -39,6 +41,14 @@
                                 <tbody>
                                 @foreach($watermelons as $watermelon)
                                     <tr>
+                                        <td><a href="{{route('watermelon.edit', $watermelon->id)}}" class="btn btn-primary">Update</a></td>
+                                        <td>
+                                            <form action="{{ route('watermelon.destroy', $watermelon->id) }}" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <input type="submit" class="btn btn-danger" value="Delete">
+                                            </form>
+                                        </td>
                                         <td>{{ $watermelon->id }}</td>
                                         <td><a href="{{ route('watermelon.show', $watermelon->id) }}">{{ $watermelon->title }}</a></td>
                                         <td>{{ $watermelon->description }}</td>
