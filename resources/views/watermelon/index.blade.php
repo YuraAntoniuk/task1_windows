@@ -28,19 +28,25 @@
                             <table class="table table-hover text-nowrap">
                                 <thead>
                                 <tr>
-                                    <th>Update</th>
-                                    <th>Delete</th>
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Description</th>
                                     <th>Sort</th>
                                     <th>Price</th>
                                     <th>Country</th>
+                                    <th>Update</th>
+                                    <th>Delete</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($watermelons as $watermelon)
                                     <tr>
+                                        <td>{{ $watermelon->id }}</td>
+                                        <td><a href="{{ route('watermelon.show', $watermelon->id) }}">{{ $watermelon->title }}</a></td>
+                                        <td>{{ $watermelon->description }}</td>
+                                        <td>{{ $watermelon->sort }}</td>
+                                        <td>{{ $watermelon->price }}</td>
+                                        <td>{{ $watermelon->country }}</td>
                                         <td><a href="{{route('watermelon.edit', $watermelon->id)}}" class="btn btn-primary">Update</a></td>
                                         <td>
                                             <form action="{{ route('watermelon.destroy', $watermelon->id) }}" method="post">
@@ -49,12 +55,6 @@
                                                 <input type="submit" class="btn btn-danger" value="Delete">
                                             </form>
                                         </td>
-                                        <td>{{ $watermelon->id }}</td>
-                                        <td><a href="{{ route('watermelon.show', $watermelon->id) }}">{{ $watermelon->title }}</a></td>
-                                        <td>{{ $watermelon->description }}</td>
-                                        <td>{{ $watermelon->sort }}</td>
-                                        <td>{{ $watermelon->price }}</td>
-                                        <td>{{ $watermelon->country }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

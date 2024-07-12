@@ -22,13 +22,8 @@
                     <div class="card">
                         <div class="card-header d-flex p-3">
                             <div class="mr-3 col-1">
-                                <a href="{{route('watermelon.edit', $watermelon->id)}}" class="btn btn-primary">Update</a>
+                                <a href="{{route('watermelon.index')}}" class="btn btn-primary">Повернутися</a>
                             </div>
-                            <form action="{{ route('watermelon.destroy', $watermelon->id) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <input type="submit" class="btn btn-danger" value="Delete">
-                            </form>
                         </div>
 
                         <div class="card-body table-responsive p-0">
