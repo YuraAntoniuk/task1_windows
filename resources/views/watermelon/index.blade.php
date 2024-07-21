@@ -53,13 +53,6 @@
                                                         <td>{{ $watermelon->price }}</td>
                                                         <td>{{ $watermelon->country }}</td>
                                                         <td><a href="{{route('watermelon.edit', $watermelon->id)}}" class="btn btn-primary">Update</a></td>
-                                                        <td>
-                                                            <form action="{{ route('watermelon.destroy', $watermelon->id) }}" method="post">
-                                                                @csrf
-                                                                @method('delete')
-                                                                <input type="submit" class="btn btn-danger" value="Видалити">
-                                                            </form>
-                                                        </td>
                                                     </tr>
                                                 @endforeach
                                         </tbody>
