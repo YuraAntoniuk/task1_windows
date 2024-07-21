@@ -12,3 +12,5 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('watermelon', \App\Http\Controllers\Watermelon\WatermelonController::class)->middleware('auth');
 Route::get('/dashboard', function (){})->middleware('auth');
+Route::post('/deletesome', \App\Http\Controllers\DeleteSelected::class)->name('/deletesome')->middleware('auth');
+
