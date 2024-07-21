@@ -20,47 +20,53 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <a href="{{route('watermelon.create')}}" class="btn btn-primary">Додати</a>
-                        </div>
+                        <form action="{{route('/deletesome')}}" method="post">
+                            @csrf
+                            <div class="card-header">
+                                <a href="{{route('watermelon.create')}}" class="btn btn-primary">Додати</a>
+                                <input type="submit" class="btn btn-danger" value="Видалити вибрані" onclick="confirm('Are you sure you want to remove this watermelon?')">
+                            </div>
 
-                        <div class="card-body table-responsive p-0">
-                            <table class="table table-hover text-nowrap">
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Sort</th>
-                                    <th>Price</th>
-                                    <th>Country</th>
-                                    <th>Update</th>
-                                    <th>Delete</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($watermelons as $watermelon)
-                                    <tr>
-                                        <td>{{ $watermelon->id }}</td>
-                                        <td><a href="{{ route('watermelon.show', $watermelon->id) }}">{{ $watermelon->title }}</a></td>
-                                        <td>{{ $watermelon->description }}</td>
-                                        <td>{{ $watermelon->sort }}</td>
-                                        <td>{{ $watermelon->price }}</td>
-                                        <td>{{ $watermelon->country }}</td>
-                                        <td><a href="{{route('watermelon.edit', $watermelon->id)}}" class="btn btn-primary">Update</a></td>
-                                        <td>
-                                            <form action="{{ route('watermelon.destroy', $watermelon->id) }}" method="post">
-                                                @csrf
-                                                @method('delete')
-                                                <input type="submit" class="btn btn-danger" value="Delete">
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                            <div class="card-body table-responsive p-0">
+                                    <table class="table table-hover text-nowrap">
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Sort</th>
+                                            <th>Price</th>
+                                            <th>Country</th>
+                                            <th>Update</th>
+                                            <th>Delete</th>
+                                        </tr>І
+                                        </thead>
+                                        <tbody>
+                                                @foreach($watermelons as $watermelon)
+                                                    <tr>
+                                                        <td><input class="form-check-input" type="checkbox" id="checkboxes" name="checkboxes[]" value="{{$watermelon->id}}" @checked(in_array($watermelon->id, old('checkboxes', [])))></td>
+                                                        <td>{{ $watermelon->id }}</td>
+                                                        <td><a href="{{ route('watermelon.show', $watermelon->id) }}">{{ $watermelon->title }}</a></td>
+                                                        <td>{{ $watermelon->description }}</td>
+                                                        <td>{{ $watermelon->sort }}</td>
+                                                        <td>{{ $watermelon->price }}</td>
+                                                        <td>{{ $watermelon->country }}</td>
+                                                        <td><a href="{{route('watermelon.edit', $watermelon->id)}}" class="btn btn-primary">Update</a></td>
+                                                        <td>
+                                                            <form action="{{ route('watermelon.destroy', $watermelon->id) }}" method="post">
+                                                                @csrf
+                                                                @method('delete')
+                                                                <input type="submit" class="btn btn-danger" value="Видалити">
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                        </tbody>
+                                    </table>
 
+                            </div>
+                        </form>
                     </div>
 
                 </div>
