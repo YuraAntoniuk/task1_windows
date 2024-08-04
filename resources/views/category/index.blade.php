@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Watermelon</h1>
+                    <h1 class="m-0">Category</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -20,16 +20,15 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{route('watermelon/bulk')}}" method="post">
+                        <form id="form1" action="{{route('category/bulk')}}" method="post">
                             @csrf
                             <div class="card-header">
-                                <a href="{{route('watermelon.create')}}" class="btn btn-primary">Add</a>
-                                <input class="btn btn-danger" value="Delete selected" data-bs-toggle="modal"
-                                       data-bs-target="#confirmModal">
+                                <a href="{{route('category.create')}}" class="btn btn-primary">Add</a>
                                 @include("confirm")
+                                <a id="bulk" class="btn btn-primary" data-bs-toggle="modal"
+                                   data-bs-target="#confirmModal">Delete selected</a>
                                 <input class="btn btn-danger" type="reset" value="Deselect all">
                             </div>
-
                             <div class="card-body table-responsive p-0">
                                 <table class="table table-hover text-nowrap">
                                     <thead>
@@ -37,34 +36,25 @@
                                         <th></th>
                                         <th>ID</th>
                                         <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Sort</th>
-                                        <th>Price</th>
-                                        <th>Country</th>
-                                        <th>Category</th>
-                                        <th>Subcategory</th>
+                                        <th>Parent id</th>
                                         <th>Update</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($watermelons as $watermelon)
+                                    @foreach($categories as $category)
                                         <tr>
                                             <td><input class="form-check-input" type="checkbox" id="checkboxes"
                                                        name="checkboxes[]"
-                                                       value="{{$watermelon->id}}" @checked(in_array($watermelon->id, old('checkboxes', [])))>
+                                                       value="{{$category->id}} @checked(in_array($category->id, old('checkboxes', [])))">
                                             </td>
-                                            <td>{{ $watermelon->id }}</td>
+                                            <td>{{ $category->id }}</td>
                                             <td>
-                                                <a href="{{ route('watermelon.show', $watermelon->id) }}">{{ $watermelon->title }}</a>
+                                                <a href="{{ route('category.show', $category->id) }}">{{ $category->title }}</a>
                                             </td>
-                                            <td>{{ $watermelon->description }}</td>
-                                            <td>{{ $watermelon->sort }}</td>
-                                            <td>{{ $watermelon->price }}</td>
-                                            <td>{{ $watermelon->country }}</td>
-                                            <td>{{ $watermelon->category_id }}</td>
-                                            <td>{{ $watermelon->subcategory_id }}</td>
-                                            <td><a href="{{route('watermelon.edit', $watermelon->id)}}"
-                                                   class="btn btn-primary">Update</a></td>
+                                            <td>{{ $category->parent_id }}</td>
+                                            <td><a href="{{route('category.edit', $category->id)}}"
+                                                   class="btn btn-primary">Update</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -72,13 +62,10 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
-
     </section>
-
     <!-- /.content -->
 @endsection

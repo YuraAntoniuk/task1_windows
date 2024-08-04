@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Watermelon;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Watermelon\StoreRequest;
 use App\Http\Requests\Watermelon\UpdateRequest;
+use App\Models\Category;
 use App\Models\Watermelon;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,8 @@ class WatermelonController extends Controller
      */
     public function create()
     {
-        return view('watermelon.create');
+        $categories = Category::all();
+        return view('watermelon.create', compact('categories'));
     }
 
     /**
@@ -73,4 +75,23 @@ class WatermelonController extends Controller
         $watermelon->delete();
         return redirect()->route('watermelon.index');
     }
+
+    public function bulk(Request $request)
+    {
+        $selectedValues = $request->input('checkboxes');
+        foreach ($selectedValues as $value){
+            Watermelon::destroy($value);
+        }
+        return redirect()->route('watermelon.index');
+    }
+
+    public function subcategory(Request $request)
+    {
+        $id = $request->input('data');
+        return response()->json([
+            'subcategories' => Category::where('parent_id', $id)->get()
+        ]);
+    }
+
+
 }
