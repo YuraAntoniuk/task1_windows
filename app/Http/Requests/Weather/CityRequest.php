@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Watermelon;
+namespace App\Http\Requests\Weather;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateRequest extends FormRequest
+class CityRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,13 +23,8 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'sort' => 'required|string',
-            'price' => 'required|integer',
-            'country' => 'required|string',
-            'category' => 'required|integer',
-            'subcategory' => 'required|integer',
+            'city' => 'required|string',
+            'lang' => 'required|string'
         ];
     }
 }

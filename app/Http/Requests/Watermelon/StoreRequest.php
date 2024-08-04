@@ -28,6 +28,8 @@ class StoreRequest extends FormRequest
             'sort' => 'required|string',
             'price' => 'required|integer',
             'country' => 'required|string',
+            'category_id' => 'required|integer',
+            'subcategory_id' => 'required|integer',
         ];
     }
 }
