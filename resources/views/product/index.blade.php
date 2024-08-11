@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Watermelon</h1>
+                    <h1 class="m-0">Product</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -20,10 +20,10 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{route('watermelon/bulk')}}" method="post">
+                        <form action="{{route('product/bulk')}}" method="post">
                             @csrf
                             <div class="card-header">
-                                <a href="{{route('watermelon.create')}}" class="btn btn-primary">Add</a>
+                                <a href="{{route('product.create')}}" class="btn btn-primary">Add</a>
                                 <input class="btn btn-danger" value="Delete selected" data-bs-toggle="modal"
                                        data-bs-target="#confirmModal">
                                 @include("confirm")
@@ -38,38 +38,34 @@
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Description</th>
-                                        <th>Sort</th>
                                         <th>Price</th>
-                                        <th>Country</th>
                                         <th>Category</th>
                                         <th>Subcategory</th>
                                         <th>Update</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($watermelons as $watermelon)
+                                    @foreach($products as $product)
                                         <tr>
                                             <td><input class="form-check-input" type="checkbox" id="checkboxes"
                                                        name="checkboxes[]"
-                                                       value="{{$watermelon->id}}" @checked(in_array($watermelon->id, old('checkboxes', [])))>
+                                                       value="{{$product->id}}" @checked(in_array($product->id, old('checkboxes', [])))>
                                             </td>
-                                            <td>{{ $watermelon->id }}</td>
+                                            <td>{{ $product->id }}</td>
                                             <td>
-                                                <a href="{{ route('watermelon.show', $watermelon->id) }}">{{ $watermelon->title }}</a>
+                                                <a href="{{ route('product.show', $product->id) }}">{{ $product->title }}</a>
                                             </td>
-                                            <td>{{ $watermelon->description }}</td>
-                                            <td>{{ $watermelon->sort }}</td>
-                                            <td>{{ $watermelon->price }}</td>
-                                            <td>{{ $watermelon->country }}</td>
+                                            <td>{{ $product->description }}</td>
+                                            <td>{{ $product->price }}</td>
                                             @foreach($categories as $category)
-                                                @if($watermelon->category_id === $category->id)
+                                                @if($product->category_id === $category->id)
                                                     <td>{{ $category->title }}</td>
                                                 @endif
-                                                @if($watermelon->subcategory_id === $category->id)
+                                                @if($product->subcategory_id === $category->id)
                                                         <td>{{ $category->title }}</td>
                                                     @endif
                                             @endforeach
-                                            <td><a href="{{route('watermelon.edit', $watermelon->id)}}"
+                                            <td><a href="{{route('product.edit', $product->id)}}"
                                                    class="btn btn-primary">Update</a></td>
                                         </tr>
                                     @endforeach
