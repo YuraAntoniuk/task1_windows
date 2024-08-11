@@ -26,7 +26,7 @@
                         <input type="text" name="description" value="{{$watermelon->description ?? old('description')}}" class="form-control" placeholder="Description"><br>
                         <input type="text" name="sort" value="{{$watermelon->sort ?? old('sort')}}" class="form-control" placeholder="Sort"><br>
                         <input type="text" name="price" value="{{$watermelon->price ?? old('price')}}" class="form-control" placeholder="Price"><br>
-                        <input type="text" name="country" value="{{$watermelon->description ?? old('country')}}" class="form-control" placeholder="Country"><br>
+                        <input type="text" name="country" value="{{$watermelon->country ?? old('country')}}" class="form-control" placeholder="Country"><br>
                         <input type="submit" class="btn btn-primary" value="Update">
                     </div>
                 </form>

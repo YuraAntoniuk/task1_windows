@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Watermelon;
+namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Watermelon\StoreRequest;
-use App\Http\Requests\Watermelon\UpdateRequest;
+use App\Http\Requests\Product\StoreRequest;
+use App\Http\Requests\Product\UpdateRequest;
 use App\Models\Category;
-use App\Models\Watermelon;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
-class WatermelonController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $watermelons = Watermelon::all();
+        $products = Product::all();
         $categories = Category::all();
-        return view('watermelon.index', compact('watermelons', 'categories'));
+        return view('product.index', compact('products', 'categories'));
     }
 
     /**
@@ -27,7 +27,7 @@ class WatermelonController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('watermelon.create', compact('categories'));
+        return view('product.create', compact('categories'));
     }
 
     /**
@@ -36,54 +36,56 @@ class WatermelonController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-        Watermelon::firstOrCreate($data);
+        Product::firstOrCreate($data);
 
-        return redirect()->route('watermelon.index');
+        return redirect()->route('product.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Watermelon $watermelon)
+    public function show(Product $product)
     {
-        return view('watermelon.show', compact('watermelon'));
+        $categories = Category::all();
+        return view('product.show', compact('product', 'categories'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Watermelon $watermelon)
+    public function edit(Product $product)
     {
-        return view('watermelon.edit', compact('watermelon'));
+        $categories = Category::all();
+        return view('product.edit', compact('product', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, Watermelon $watermelon)
+    public function update(UpdateRequest $request, Product $product)
     {
         $data = $request->validated();
-        $watermelon->update($data);
-
-        return view('watermelon.show', compact('watermelon'));
+        $product->update($data);
+        $categories = Category::all();
+        return view('product.show', compact('product', 'categories'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Watermelon $watermelon)
+    public function destroy(Product $product)
     {
-        $watermelon->delete();
-        return redirect()->route('watermelon.index');
+        $product->delete();
+        return redirect()->route('product.index');
     }
 
     public function bulk(Request $request)
     {
         $selectedValues = $request->input('checkboxes');
         foreach ($selectedValues as $value){
-            Watermelon::destroy($value);
+            Product::destroy($value);
         }
-        return redirect()->route('watermelon.index');
+        return redirect()->route('product.index');
     }
 
     public function subcategory(Request $request)
@@ -93,6 +95,4 @@ class WatermelonController extends Controller
             'subcategories' => Category::where('parent_id', $id)->get()
         ]);
     }
-
-
 }
