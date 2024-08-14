@@ -31,16 +31,16 @@
                             </div>
 
                             <div class="card-body table-responsive p-0">
-                                <table class="table table-hover text-nowrap">
+                                <table id="table" class="table table-hover text-nowrap">
                                     <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Price</th>
-                                        <th>Category</th>
-                                        <th>Subcategory</th>
+                                        <th onclick="sortTable(1)">ID</th>
+                                        <th onclick="sortTable(2)">Name</th>
+                                        <th onclick="sortTable(3)">Description</th>
+                                        <th onclick="sortTable(4)">Price</th>
+                                        <th onclick="sortTable(5)">Category</th>
+                                        <th onclick="sortTable(6)">Subcategory</th>
                                         <th>Update</th>
                                     </tr>
                                     </thead>
@@ -80,7 +80,78 @@
             <!-- /.row -->
         </div><!-- /.container-fluid -->
 
+        <script>
 
+            // JavaScript program to illustrate
+            // Table sort for both columns and
+            // both directions
+            function sortTable(n) {
+                let table;
+                table = document.getElementById("table");
+                var i, x, y, count = 0;
+                var switching = true;
+
+                // Order is set as ascending
+                var direction = "ascending";
+
+                // Run loop until no switching is needed
+                while (switching) {
+                    switching = false;
+                    var rows = table.rows;
+
+                    //Loop to go through all rows
+                    for (i = 1; i < (rows.length - 1); i++) {
+                        var Switch = false;
+
+                        // Fetch 2 elements that need to be compared
+                        x = rows[i].getElementsByTagName("TD")[n];
+                        y = rows[i + 1].getElementsByTagName("TD")[n];
+
+                        // Check the direction of order
+                        if (direction === "ascending") {
+
+                            // Check if 2 rows need to be switched
+                            if (x.innerHTML.toLowerCase() >
+                                y.innerHTML.toLowerCase()) {
+
+                                // If yes, mark Switch as needed
+                                // and break loop
+                                Switch = true;
+                                break;
+                            }
+                        } else if (direction === "descending") {
+
+                            // Check direction
+                            if (x.innerHTML.toLowerCase() <
+                                y.innerHTML.toLowerCase()) {
+
+                                // If yes, mark Switch as needed
+                                // and break loop
+                                Switch = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (Switch) {
+
+                        // Function to switch rows and mark
+                        // switch as completed
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+
+                        // Increase count for each switch
+                        count++;
+                    } else {
+
+                        // Run while loop again for descending order
+                        if (count === 0 && direction === "ascending") {
+                            direction = "descending";
+                            switching = true;
+                        }
+                    }
+                }
+            }
+        </script>
     </section>
 
     <!-- /.content -->

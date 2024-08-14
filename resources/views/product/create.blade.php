@@ -23,7 +23,7 @@
                     <div class="form-group w-25">
                         <input type="text" name="title" class="form-control" placeholder="Name"><br>
                         <input type="text" name="description" class="form-control" placeholder="Description"><br>
-                        <input type="text" name="price" class="form-control" placeholder="Price"><br>
+                        <input type="number" name="price" class="form-control" placeholder="Price"><br>
                         <select id="category_id" name="category_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
                             <option value="" selected disabled hidden>Choose category</option>
                             @foreach ($categories as $category)
