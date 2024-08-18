@@ -45,20 +45,14 @@
                                     <td>Price</td>
                                     <td>{{ $product->price }}</td>
                                 </tr>
-                                @foreach($categories as $category)
-                                        @if($product->category_id === $category->id)
-                                            <tr>
-                                                <td>Category</td>
-                                                <td>{{ $category->title }}</td>
-                                            </tr>
-                                        @endif
-                                        @if($product->subcategory_id === $category->id)
-                                            <tr>
-                                                <td>Subcategory</td>
-                                                <td>{{ $category->title }}</td>
-                                            </tr>
-                                        @endif
-                                @endforeach
+                                <tr>
+                                    <td>Category</td>
+                                    <td>{{ $product->category->title }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Subcategory</td>
+                                    <td>{{ $product->subcategory->title }}</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>

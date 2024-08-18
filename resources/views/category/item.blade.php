@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Category</h1>
+                    <h1 class="m-0">{{$category->title}}</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -20,43 +20,49 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form id="form1" action="{{route('category/bulk')}}" method="post">
+                        <form action="{{route('product/bulk')}}" method="post">
                             @csrf
                             <div class="card-header">
-                                <a href="{{route('category.create')}}" class="btn btn-primary">Add</a>
+                                <a href="{{route('product.create')}}" class="btn btn-primary">Add</a>
+                                <input class="btn btn-danger" value="Delete selected" data-bs-toggle="modal"
+                                       data-bs-target="#confirmModal">
                                 @include("confirm")
-                                <a id="bulk" class="btn btn-primary" data-bs-toggle="modal"
-                                   data-bs-target="#confirmModal">Delete selected</a>
                                 <input class="btn btn-danger" type="reset" value="Deselect all">
                             </div>
+
                             <div class="card-body table-responsive p-0">
-                                <table class="table table-hover text-nowrap">
+                                <table id="table" class="table table-hover text-nowrap">
                                     <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Parent id</th>
+                                        <th onclick="sortTable(1)">ID</th>
+                                        <th onclick="sortTable(2)">Name</th>
+                                        <th onclick="sortTable(3)">Description</th>
+                                        <th onclick="sortTable(4)">Price</th>
+                                        <th onclick="sortTable(5)">Category</th>
+                                        <th onclick="sortTable(6)">Subcategory</th>
                                         <th>Update</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($categories as $category)
+                                    @foreach($products as $product)
                                         <tr>
                                             <td><input class="form-check-input" type="checkbox" id="checkboxes"
                                                        name="checkboxes[]"
-                                                       value="{{$category->id}} @checked(in_array($category->id, old('checkboxes', [])))">
+                                                       value="{{$product->id}}" @checked(in_array($product->id, old('checkboxes', [])))>
                                             </td>
-                                            <td>{{ $category->id }}</td>
+                                            <td>{{ $product->id }}</td>
                                             <td>
-                                                <a href="{{ route('category.show', $category->id) }}">{{ $category->title }}</a>
+                                                <a href="{{ route('product.show', $product->id) }}">{{ $product->title }}</a>
                                             </td>
-                                            <td>{{ $category->parent_id }}</td>
-                                            <td><a href="{{route('category.edit', $category->id)}}"
-                                                   class="btn btn-primary">Update</a>
-                                            </td>
+                                            <td>{{ $product->description }}</td>
+                                            <td>{{ $product->price }}</td>
+                                            <td>{{ $product->category->title }}</td>
+                                            <td>{{ $product->subcategory->title }}</td>
+                                            <td><a href="{{route('product.edit', $product->id)}}"
+                                                   class="btn btn-primary">Update</a></td>
                                             <td>
-                                                <form id="delete_form" action="{{route('category.destroy', $category->id)}}" method="post">
+                                                <form id="delete_form" action="{{route('product.destroy', $product->id)}}" method="post">
                                                     @csrf
                                                     @method('delete')
                                                     <input type="submit" class="btn btn-danger" value="Delete">
@@ -68,7 +74,9 @@
                                 </table>
                             </div>
                         </form>
+
                     </div>
+
                 </div>
             </div>
             <!-- /.row -->

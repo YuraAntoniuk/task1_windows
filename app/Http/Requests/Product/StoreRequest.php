@@ -23,11 +23,22 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string',
+            'title' => 'required|string|regex:/^[!~`#$%^&*()_+-=;:?<>]+$/',
             'description' => 'required|string',
             'price' => 'required|integer',
             'category_id' => 'required|integer',
             'subcategory_id' => 'required|integer',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'title.regex' => 'Title contains prohibited characters',
+            'title.required' => 'Title must be filled',
+            'description.required' => 'Description must be filled',
+            'price.required' => 'Description must be filled',
+            'category_id.required' => 'Category must be selected',
+            'subcategory_id.required' => 'Subcategory must be selected',
         ];
     }
 }

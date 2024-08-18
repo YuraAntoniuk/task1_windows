@@ -8,6 +8,7 @@ use App\Http\Requests\Product\UpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -17,8 +18,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        $categories = Category::all();
-        return view('product.index', compact('products', 'categories'));
+        return view('product.index', compact('products'));
     }
 
     /**
@@ -35,10 +35,15 @@ class ProductController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $data = $request->validated();
-        Product::firstOrCreate($data);
+        $validator = Validator::make($request->all(), $request->rules());
+        if ($validator->fails()){
+            return redirect('product.create')->withErrors($validator)->withInput();
+        }else
+        {
+            Product::create($request->all());
 
-        return redirect()->route('product.index');
+            return redirect()->route('product.index');
+        }
     }
 
     /**
@@ -46,8 +51,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $categories = Category::all();
-        return view('product.show', compact('product', 'categories'));
+        return view('product.show', compact('product'));
     }
 
     /**
@@ -56,6 +60,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::all();
+
         return view('product.edit', compact('product', 'categories'));
     }
 
@@ -67,6 +72,7 @@ class ProductController extends Controller
         $data = $request->validated();
         $product->update($data);
         $categories = Category::all();
+
         return view('product.show', compact('product', 'categories'));
     }
 
@@ -76,6 +82,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
+
         return redirect()->route('product.index');
     }
 
@@ -85,6 +92,7 @@ class ProductController extends Controller
         foreach ($selectedValues as $value){
             Product::destroy($value);
         }
+
         return redirect()->route('product.index');
     }
 
