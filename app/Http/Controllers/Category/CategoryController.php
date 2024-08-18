@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\StoreRequest;
 use App\Http\Requests\Category\UpdateRequest;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -81,6 +82,17 @@ class CategoryController extends Controller
             Category::destroy($value);
         }
         return redirect()->route('category.index');
+    }
+
+    public function item($categoryId)
+    {
+        $category = Category::find($categoryId);
+        if ($category->parent_id === null){
+            $products = $category->category_products;
+        }else{
+            $products = $category->subcategory_products;
+        }
+        return view('category.item', compact('category','products'));
     }
 
 }

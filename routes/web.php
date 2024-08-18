@@ -15,6 +15,7 @@ Route::post('product/bulk', [\App\Http\Controllers\Product\ProductController::cl
 Route::post('watermelon/subcategory', [\App\Http\Controllers\Watermelon\WatermelonController::class, 'subcategory'])->name('watermelon/subcategory')->middleware('auth');
 Route::post('product/subcategory', [\App\Http\Controllers\Watermelon\WatermelonController::class, 'subcategory'])->name('product/subcategory')->middleware('auth');
 Route::post('category/bulk', [\App\Http\Controllers\Category\CategoryController::class, 'bulk'])->name('category/bulk')->middleware('auth');
+Route::get('category/{category}/item', [\App\Http\Controllers\Category\CategoryController::class, 'item'])->name('category/item')->middleware('auth');
 Route::resource('watermelon', \App\Http\Controllers\Watermelon\WatermelonController::class)->middleware('auth');
 Route::resource('product', \App\Http\Controllers\Product\ProductController::class)->middleware('auth');
 Route::resource('category', \App\Http\Controllers\Category\CategoryController::class)->middleware('auth');

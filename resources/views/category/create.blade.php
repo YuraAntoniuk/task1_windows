@@ -5,7 +5,7 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
+                <div class="d-flex justify-content-center">
                     <h1 class="m-0">Add category</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -20,7 +20,7 @@
             <div class="row">
                 <form action="{{route('category.store')}}" method="post">
                     @csrf
-                    <div class="form-group w-25">
+                    <div class="form-group w-25 mx-auto">
                         <input type="text" name="title" class="form-control" placeholder="Name"><br>
                         <select id="category" name="parent_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
                             <option value="" selected disabled hidden>Choose parent category</option>

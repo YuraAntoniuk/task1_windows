@@ -42,6 +42,7 @@
                                         <th onclick="sortTable(5)">Category</th>
                                         <th onclick="sortTable(6)">Subcategory</th>
                                         <th>Update</th>
+                                        <th>Delete</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -57,16 +58,21 @@
                                             </td>
                                             <td>{{ $product->description }}</td>
                                             <td>{{ $product->price }}</td>
-                                            @foreach($categories as $category)
-                                                @if($product->category_id === $category->id)
-                                                    <td>{{ $category->title }}</td>
-                                                @endif
-                                                @if($product->subcategory_id === $category->id)
-                                                        <td>{{ $category->title }}</td>
-                                                    @endif
-                                            @endforeach
+                                            <td>
+                                                <a href="{{route('category/item', $product->category_id)}}">{{ $product->category->title }}</a>
+                                            </td>
+                                            <td>
+                                                <a href="{{route('category/item', $product->subcategory_id)}}">{{ $product->subcategory->title }}</a>
+                                            </td>
                                             <td><a href="{{route('product.edit', $product->id)}}"
                                                    class="btn btn-primary">Update</a></td>
+                                            <td>
+                                                <form id="delete_form" action="{{route('product.destroy', $product->id)}}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <input type="submit" class="btn btn-danger" value="Delete">
+                                                </form>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
