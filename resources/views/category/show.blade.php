@@ -21,11 +21,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header d-flex p-3">
-                            <div class="mr-3 col-1">
+                            <div class="form-group d-grid gap-2 d-md-block">
                                 <a href="{{route('category.index')}}" class="btn btn-primary">Повернутися</a>
+                                <a href="{{route('category/item', $category->id)}}" class="btn btn-warning">Товари в категорії</a>
                             </div>
                         </div>
-
                         <div class="card-body table-responsive p-0">
                             <table class="table table-hover text-nowrap">
                                 <tbody>

@@ -20,6 +20,4 @@ Route::resource('watermelon', \App\Http\Controllers\Watermelon\WatermelonControl
 Route::resource('product', \App\Http\Controllers\Product\ProductController::class)->middleware('auth');
 Route::resource('category', \App\Http\Controllers\Category\CategoryController::class)->middleware('auth');
 Route::get('/dashboard', function (){})->middleware('auth');
-Route::get('/weather', [\App\Http\Controllers\Weather\WeatherController::class, 'index'])->middleware('auth');
-Route::post('/weather/city', [\App\Http\Controllers\Weather\WeatherController::class, 'getWatherByCity'])->middleware('auth');
 

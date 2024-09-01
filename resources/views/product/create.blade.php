@@ -63,6 +63,7 @@
         $("#category_id").on("change", function (){
             $('#subcategory_id').empty()
             var data = $("#category_id").val()
+            console.log(data)
             $.ajax({
                 url: "/product/subcategory",
                 type: 'POST',

@@ -35,15 +35,10 @@ class ProductController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $validator = Validator::make($request->all(), $request->rules());
-        if ($validator->fails()){
-            return redirect('product.create')->withErrors($validator)->withInput();
-        }else
-        {
-            Product::create($request->all());
+        $validated = $request->validated();
+        Product::create($validated);
 
-            return redirect()->route('product.index');
-        }
+        return redirect()->route('product.index');
     }
 
     /**
@@ -88,12 +83,10 @@ class ProductController extends Controller
 
     public function bulk(Request $request)
     {
-        $selectedValues = $request->input('checkboxes');
-        foreach ($selectedValues as $value){
-            Product::destroy($value);
-        }
+        $selectedValues = $request->input('arrayData');
+        Product::destroy($selectedValues);
 
-        return redirect()->route('product.index');
+        return response()->json(['success' => 'Data deleted successfully.']);
     }
 
     public function subcategory(Request $request)

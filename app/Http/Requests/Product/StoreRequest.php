@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Product;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Auth;
 
 class StoreRequest extends FormRequest
@@ -23,7 +25,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|regex:/^[!~`#$%^&*()_+-=;:?<>]+$/',
+            'title' => 'required|string|regex:/^[a-zA-Zа-яА-ЯіїєґІЇЄҐ0-9\(\)\.\-\_\,\@]+$/',
             'description' => 'required|string',
             'price' => 'required|integer',
             'category_id' => 'required|integer',
@@ -40,5 +42,15 @@ class StoreRequest extends FormRequest
             'category_id.required' => 'Category must be selected',
             'subcategory_id.required' => 'Subcategory must be selected',
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            redirect()
+                ->route('product.create')
+                ->withErrors($validator)
+                ->withInput()
+        );
     }
 }

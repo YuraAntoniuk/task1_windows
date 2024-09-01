@@ -28,6 +28,7 @@
                                        data-bs-target="#confirmModal">
                                 @include("confirm")
                                 <input class="btn btn-danger" type="reset" value="Deselect all">
+                                <input class="btn btn-warning" type="button" onclick="selectAll()" value="Select all">
                             </div>
 
                             <div class="card-body table-responsive p-0">
@@ -80,82 +81,83 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
+            $("#confirm").on('click', function (e){
+                e.preventDefault()
+                let values = []
+                $("#checkboxes:checked").each(function (){
+                    values.push($(this).val())
+                })
+                console.log(values)
+                $.ajax({
+                    url: "/product/bulk",
+                    type: 'POST',
+                    data: {
+                        arrayData: values,
+                        _token: '{{csrf_token()}}'
+                    },
+                    success: function(response) {
+                        console.log('Success:', response);
+                        window.location.href = '{{url()->current()}}';
+                    },
+                    error: function(xhr) {
+                        // Handle errors
+                        console.error(xhr.responseText);
+                    }
+                })
 
-            // JavaScript program to illustrate
-            // Table sort for both columns and
-            // both directions
+            })
+        </script>
+        <script>
             function sortTable(n) {
-                let table;
+                var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
                 table = document.getElementById("table");
-                var i, x, y, count = 0;
-                var switching = true;
-
-                // Order is set as ascending
-                var direction = "ascending";
-
-                // Run loop until no switching is needed
+                switching = true;
+                dir = "asc";
                 while (switching) {
                     switching = false;
-                    var rows = table.rows;
-
-                    //Loop to go through all rows
+                    rows = table.rows;
                     for (i = 1; i < (rows.length - 1); i++) {
-                        var Switch = false;
-
-                        // Fetch 2 elements that need to be compared
+                        shouldSwitch = false;
                         x = rows[i].getElementsByTagName("TD")[n];
                         y = rows[i + 1].getElementsByTagName("TD")[n];
 
-                        // Check the direction of order
-                        if (direction === "ascending") {
-
-                            // Check if 2 rows need to be switched
-                            if (x.innerHTML.toLowerCase() >
-                                y.innerHTML.toLowerCase()) {
-
-                                // If yes, mark Switch as needed
-                                // and break loop
-                                Switch = true;
+                        let xContent = (isNaN(x.innerHTML)) ? (x.innerHTML.toLowerCase() === '-') ? 0 : x.innerHTML.toLowerCase() : parseFloat(x.innerHTML);
+                        var yContent = (isNaN(y.innerHTML)) ? (y.innerHTML.toLowerCase() === '-') ? 0 : y.innerHTML.toLowerCase() : parseFloat(y.innerHTML);
+                        if (dir === "asc") {
+                            if (xContent > yContent) {
+                                shouldSwitch = true;
                                 break;
                             }
-                        } else if (direction === "descending") {
-
-                            // Check direction
-                            if (x.innerHTML.toLowerCase() <
-                                y.innerHTML.toLowerCase()) {
-
-                                // If yes, mark Switch as needed
-                                // and break loop
-                                Switch = true;
+                        } else if (dir === "desc") {
+                            if (xContent < yContent) {
+                                shouldSwitch = true;
                                 break;
                             }
                         }
                     }
-                    if (Switch) {
-
-                        // Function to switch rows and mark
-                        // switch as completed
+                    if (shouldSwitch) {
                         rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
                         switching = true;
-
-                        // Increase count for each switch
-                        count++;
+                        switchcount ++;
                     } else {
-
-                        // Run while loop again for descending order
-                        if (count === 0 && direction === "ascending") {
-                            direction = "descending";
+                        if (switchcount === 0 && dir === "asc") {
+                            dir = "desc";
                             switching = true;
                         }
                     }
                 }
+            }
+        </script>
+
+        <script>
+            function selectAll(){
+                $(".form-check-input").prop("checked", true);
             }
         </script>
     </section>

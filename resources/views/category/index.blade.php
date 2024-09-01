@@ -20,14 +20,15 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form id="form1" action="{{route('category/bulk')}}" method="post">
+                        <form action="{{route('category/bulk')}}" method="post">
                             @csrf
                             <div class="card-header">
                                 <a href="{{route('category.create')}}" class="btn btn-primary">Add</a>
+                                <input class="btn btn-danger" value="Delete selected" data-bs-toggle="modal"
+                                       data-bs-target="#confirmModal">
                                 @include("confirm")
-                                <a id="bulk" class="btn btn-primary" data-bs-toggle="modal"
-                                   data-bs-target="#confirmModal">Delete selected</a>
                                 <input class="btn btn-danger" type="reset" value="Deselect all">
+                                <input class="btn btn-warning" type="button" onclick="selectAll()" value="Select all">
                             </div>
                             <div class="card-body table-responsive p-0">
                                 <table class="table table-hover text-nowrap">
@@ -38,6 +39,7 @@
                                         <th>Name</th>
                                         <th>Parent id</th>
                                         <th>Update</th>
+                                        <th>Delete</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -73,6 +75,39 @@
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            $("#confirm").on('click', function (e){
+                e.preventDefault()
+                let values = []
+                $("#checkboxes:checked").each(function (){
+                    values.push($(this).val())
+                })
+                console.log(values)
+                $.ajax({
+                    url: "/category/bulk",
+                    type: 'POST',
+                    data: {
+                        arrayData: values,
+                        _token: '{{csrf_token()}}'
+                    },
+                    success: function(response) {
+                        console.log('Success:', response);
+                        window.location.href = '{{url()->current()}}';
+                    },
+                    error: function(xhr) {
+                        // Handle errors
+                        console.error(xhr.responseText);
+                    }
+                })
+
+            })
+        </script>
+        <script>
+            function selectAll(){
+                $(".form-check-input").prop("checked", true);
+            }
+        </script>
     </section>
     <!-- /.content -->
 @endsection
