@@ -7,13 +7,20 @@ use App\Http\Requests\Category\StoreRequest;
 use App\Http\Requests\Category\UpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
+use App\Services\CategoryService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    private $categoryService;
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
     public function index()
     {
         $categories = Category::all();
@@ -34,9 +41,13 @@ class CategoryController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $data = $request->validated();
-        Category::firstOrCreate($data);
-        return redirect()->route('category.index');
+        $validated = $request->validated();
+        $this->categoryService->make($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Validation complete successfully',
+            ]);
     }
 
     /**
@@ -77,11 +88,9 @@ class CategoryController extends Controller
 
     public function bulk(Request $request)
     {
-        $selectedValues = $request->input('checkboxes');
-        foreach ($selectedValues as $value){
-            Category::destroy($value);
-        }
-        return redirect()->route('category.index');
+        $selectedValues = $request->input('arrayData');
+        Category::destroy($selectedValues);
+
     }
 
     public function item($categoryId)
