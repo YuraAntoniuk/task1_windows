@@ -27,6 +27,7 @@
                                 <input class="btn btn-danger" value="Delete selected" data-bs-toggle="modal"
                                        data-bs-target="#confirmModal">
                                 @include("confirm")
+                                <input class="btn btn-warning" type="button" onclick="selectAll()" value="Select all">
                                 <input class="btn btn-danger" type="reset" value="Deselect all">
                             </div>
 
@@ -42,6 +43,7 @@
                                         <th onclick="sortTable(5)">Category</th>
                                         <th onclick="sortTable(6)">Subcategory</th>
                                         <th>Update</th>
+                                        <th>Delete</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -81,6 +83,12 @@
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
+        <script type="text/javascript" src="/scripts/scripts.js"></script>
+        <script>
+            function selectAll(){
+                $(".form-check-input").prop("checked", true);
+            }
+        </script>
     </section>
     <!-- /.content -->
 @endsection

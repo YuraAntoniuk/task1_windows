@@ -47,11 +47,15 @@
                                 </tr>
                                 <tr>
                                     <td>Category</td>
-                                    <td>{{ $product->category->title }}</td>
+                                    <td>
+                                        <a href="{{route('category/item', $product->category_id)}}">{{ $product->category->title }}</a>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Subcategory</td>
-                                    <td>{{ $product->subcategory->title }}</td>
+                                    <td>
+                                        <a href="{{route('category/item', $product->subcategory_id)}}">{{ $product->subcategory->title }}</a>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>

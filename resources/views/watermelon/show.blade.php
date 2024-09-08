@@ -31,27 +31,15 @@
                                 <tbody>
                                 <tr>
                                     <td>ID</td>
-                                    <td>{{ $watermelon->id }}</td>
+                                    <td>{{ $user['data']['id']}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Name</td>
-                                    <td>{{ $watermelon->title }}</td>
+                                    <td>First name</td>
+                                    <td>{{ $user['data']['first_name'] }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Description</td>
-                                    <td>{{ $watermelon->description }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Sort</td>
-                                    <td>{{ $watermelon->sort }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Price</td>
-                                    <td>{{ $watermelon->price }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Country</td>
-                                    <td>{{ $watermelon->country }}</td>
+                                    <td>Last name</td>
+                                    <td>{{ $user['data']['last_name'] }}</td>
                                 </tr>
                                 </tbody>
                             </table>

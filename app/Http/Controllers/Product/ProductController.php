@@ -7,6 +7,7 @@ use App\Http\Requests\Product\StoreRequest;
 use App\Http\Requests\Product\UpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
+use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,9 +16,15 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+    private $productService;
+    public function __construct(ProductService $productService)
+    {
+        $this->productService = $productService;
+    }
     public function index()
     {
-        $products = Product::all();
+        $products = $this->productService->getAll();
+
         return view('product.index', compact('products'));
     }
 
@@ -36,7 +43,7 @@ class ProductController extends Controller
     public function store(StoreRequest $request)
     {
         $validated = $request->validated();
-        Product::create($validated);
+        $this->productService->create($validated);
 
         return redirect()->route('product.index');
     }
@@ -44,8 +51,10 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show($id)
     {
+        $product = $this->productService->find($id);
+
         return view('product.show', compact('product'));
     }
 
@@ -55,28 +64,26 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::all();
-
         return view('product.edit', compact('product', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, Product $product)
+    public function update(UpdateRequest $request, $id)
     {
         $data = $request->validated();
-        $product->update($data);
-        $categories = Category::all();
+        $product = $this->productService->update($data, $id);
 
-        return view('product.show', compact('product', 'categories'));
+        return view('product.show', compact('product'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        $product->delete();
+        $this->productService->delete($id);
 
         return redirect()->route('product.index');
     }

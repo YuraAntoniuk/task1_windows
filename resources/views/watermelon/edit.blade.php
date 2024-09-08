@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Update watermelon </h1>
+                    <h1 class="m-0">Update user </h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -18,15 +18,13 @@
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
-                <form action="{{route('watermelon.update', $watermelon->id)}}" method="post">
+                <form action="{{route('watermelon.update', $user['data']['id'])}}" method="post">
                     @csrf
-                    @method('patch')
+                    @method('put')
                     <div class="form-group w-25">
-                        <input type="text" name="title" value="{{$watermelon->title ?? old('title')}}" class="form-control" placeholder="Name"><br>
-                        <input type="text" name="description" value="{{$watermelon->description ?? old('description')}}" class="form-control" placeholder="Description"><br>
-                        <input type="text" name="sort" value="{{$watermelon->sort ?? old('sort')}}" class="form-control" placeholder="Sort"><br>
-                        <input type="text" name="price" value="{{$watermelon->price ?? old('price')}}" class="form-control" placeholder="Price"><br>
-                        <input type="text" name="country" value="{{$watermelon->country ?? old('country')}}" class="form-control" placeholder="Country"><br>
+                        <input type="text" name="name" value="{{$user['data']['first_name']}}" class="form-control" placeholder="First name"><br>
+                        <input type="text" name="job" value="{{$user['data']['last_name']}}" class="form-control" placeholder="Last name"><br>
+                        <input type="text" name="job" value="{{$user['data']['email']}}" class="form-control" placeholder="Email"><br>
                         <input type="submit" class="btn btn-primary" value="Update">
                     </div>
                 </form>

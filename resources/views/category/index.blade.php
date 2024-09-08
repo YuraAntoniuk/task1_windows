@@ -27,16 +27,16 @@
                                 <input class="btn btn-danger" value="Delete selected" data-bs-toggle="modal"
                                        data-bs-target="#confirmModal">
                                 @include("confirm")
-                                <input class="btn btn-danger" type="reset" value="Deselect all">
                                 <input class="btn btn-warning" type="button" onclick="selectAll()" value="Select all">
+                                <input class="btn btn-danger" type="reset" value="Deselect all">
                             </div>
                             <div class="card-body table-responsive p-0">
-                                <table class="table table-hover text-nowrap">
+                                <table id="table" class="table table-hover text-nowrap">
                                     <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
-                                        <th>Name</th>
+                                        <th onclick="sortTable(1)">ID</th>
+                                        <th onclick="sortTable(2)">Name</th>
                                         <th>Parent id</th>
                                         <th>Update</th>
                                         <th>Delete</th>
@@ -68,6 +68,7 @@
                                     @endforeach
                                     </tbody>
                                 </table>
+                                {{$categories->links()}}
                             </div>
                         </form>
                     </div>
@@ -103,6 +104,7 @@
 
             })
         </script>
+        <script type="text/javascript" src="/scripts/scripts.js"></script>
         <script>
             function selectAll(){
                 $(".form-check-input").prop("checked", true);

@@ -26,7 +26,6 @@
                 <a class="navbar-brand" href="{{route('product.index')}}">Product</a>
                 <a class="navbar-brand" href="{{route('watermelon.index')}}">Watermelon</a>
                 <a class="navbar-brand" href="{{route('category.index')}}">Category</a>
-                <a class="navbar-brand" href="{{url('/weather')}}">Weather</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>

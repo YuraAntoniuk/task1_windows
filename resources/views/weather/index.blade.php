@@ -19,14 +19,8 @@
             <!-- Small boxes (Stat box) -->
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <form action="{{url('/weather/city')}}" method="post">
+                    <form action="{{url('/crud/all')}}" method="get">
                         @csrf
-                        <input id="city" type="text" class="form-control" name="city"><br>
-                        <select id="lang" name="lang" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                            @foreach ($languages as $language)
-                                <option value="{{$language}}">{{$language}}</option>
-                            @endforeach
-                        </select><br>
                         <input type="submit" class="btn btn-primary" value="submit">
                     </form>
                 </div>

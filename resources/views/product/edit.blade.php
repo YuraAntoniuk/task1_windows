@@ -5,7 +5,7 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
+                <div class="d-flex justify-content-center">
                     <h1 class="m-0">Update product</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -21,10 +21,23 @@
                 <form action="{{route('product.update', $product->id)}}" method="post">
                     @csrf
                     @method('patch')
-                    <div class="form-group w-25">
-                        <input type="text" name="title" value="{{$product->title ?? old('title')}}" class="form-control" placeholder="Name"><br>
-                        <input type="text" name="description" value="{{$product->description ?? old('description')}}" class="form-control" placeholder="Description"><br>
-                        <input type="text" name="price" value="{{$product->price ?? old('price')}}" class="form-control" placeholder="Price"><br>
+                    <div class="form-group w-25 mx-auto">
+                        <label>
+                            ID
+                            <input type="text" name="id" value="{{$product->id}}" class="form-control" placeholder="Name" disabled><br>
+                        </label>
+                        <input type="text" name="title" value="{{$product->title ?? old('title')}}" class="form-control" placeholder="Name">
+                        @if ($errors->has('title'))
+                            <span class="text-danger">{{ $errors->first('title') }}</span>
+                        @endif<br>
+                        <input type="text" name="description" value="{{$product->description ?? old('description')}}" class="form-control" placeholder="Description">
+                        @if ($errors->has('description'))
+                            <span class="text-danger">{{ $errors->first('description') }}</span>
+                        @endif<br>
+                        <input type="text" name="price" value="{{$product->price ?? old('price')}}" class="form-control" placeholder="Price">
+                        @if ($errors->has('price'))
+                            <span class="text-danger">{{ $errors->first('price') }}</span>
+                        @endif<br>
                         <select id="category_id" name="category_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
                             <option value="{{$product->category_id}}" selected>Choose category</option>
                             @foreach ($categories as $category)
@@ -32,10 +45,16 @@
                                 <option value="{{$category->id}}">{{$category->title}}</option>
                                 }@endif
                             @endforeach
-                        </select><br>
+                        </select>
+                        @if ($errors->has('category_id'))
+                            <span class="text-danger">{{ $errors->first('category_id') }}</span>
+                        @endif<br>
                         <select id="subcategory_id" name="subcategory_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
                             <option value="" selected disabled hidden>Choose subcategory</option>
-                        </select><br>
+                        </select>
+                        @if ($errors->has('subcategory_id'))
+                            <span class="text-danger">{{ $errors->first('subcategory_id') }}</span>
+                        @endif<br>
                         <input type="submit" class="btn btn-primary" value="Update">
                     </div>
                 </form>

@@ -6,10 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\StoreRequest;
 use App\Http\Requests\Category\UpdateRequest;
 use App\Models\Category;
-use App\Models\Product;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -23,7 +21,8 @@ class CategoryController extends Controller
     }
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::paginate(15);
+
         return view('category.index', compact('categories'));
     }
 
