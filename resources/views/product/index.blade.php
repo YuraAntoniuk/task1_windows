@@ -27,8 +27,8 @@
                                 <input class="btn btn-danger" value="Delete selected" data-bs-toggle="modal"
                                        data-bs-target="#confirmModal">
                                 @include("confirm")
-                                <input class="btn btn-danger" type="reset" value="Deselect all">
                                 <input class="btn btn-warning" type="button" onclick="selectAll()" value="Select all">
+                                <input class="btn btn-danger" type="reset" value="Deselect all">
                             </div>
 
                             <div class="card-body table-responsive p-0">
@@ -78,6 +78,9 @@
                                     @endforeach
                                     </tbody>
                                 </table>
+                                <div class="p-2 mx-auto input-group mb-2">
+                                    {{$products->links()}}
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -113,47 +116,7 @@
 
             })
         </script>
-        <script>
-            function sortTable(n) {
-                var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-                table = document.getElementById("table");
-                switching = true;
-                dir = "asc";
-                while (switching) {
-                    switching = false;
-                    rows = table.rows;
-                    for (i = 1; i < (rows.length - 1); i++) {
-                        shouldSwitch = false;
-                        x = rows[i].getElementsByTagName("TD")[n];
-                        y = rows[i + 1].getElementsByTagName("TD")[n];
-
-                        let xContent = (isNaN(x.innerHTML)) ? (x.innerHTML.toLowerCase() === '-') ? 0 : x.innerHTML.toLowerCase() : parseFloat(x.innerHTML);
-                        var yContent = (isNaN(y.innerHTML)) ? (y.innerHTML.toLowerCase() === '-') ? 0 : y.innerHTML.toLowerCase() : parseFloat(y.innerHTML);
-                        if (dir === "asc") {
-                            if (xContent > yContent) {
-                                shouldSwitch = true;
-                                break;
-                            }
-                        } else if (dir === "desc") {
-                            if (xContent < yContent) {
-                                shouldSwitch = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (shouldSwitch) {
-                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                        switching = true;
-                        switchcount ++;
-                    } else {
-                        if (switchcount === 0 && dir === "asc") {
-                            dir = "desc";
-                            switching = true;
-                        }
-                    }
-                }
-            }
-        </script>
+        <script type="text/javascript" src="/scripts/scripts.js"></script>
 
         <script>
             function selectAll(){

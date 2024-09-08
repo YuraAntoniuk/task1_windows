@@ -2,30 +2,66 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
 class ApiService
 {
 
-    protected $host;
-    protected $apiKey;
+
+    protected $client;
 
     public function __construct()
     {
-        $this->host = env('OPEN_WEATHER_API_URL');
-        $this->apiKey = env('OPEN_WEATHER_API_KEY');
+        $this->client = new Client([
+            'base_uri' => config('api.base_uri'),
+        ]);
     }
 
-    public function getWeather($city, $lang)
+
+    public function getUsers($page = 1)
     {
-        $response = Http::withHeaders([
-            'X-RapidAPI-Host' => $this->host,
-            'X-RapidAPI-Key' => $this->apiKey,
-        ])->get('https://' . $this->host . '/city/' . $city . '/' . $lang);
+        $response = $this->client->get('users', [
+            'query' => ['page' => $page],
+        ]);
 
-        if ($response->successful()) {
-            return $response->json();
-        } else {
-            return $response->throw();
-        }
+        return json_decode($response->getBody(), true);
     }
+
+    public function getUser($id)
+    {
+        $response = $this->client->get("users/{$id}");
+
+        return json_decode($response->getBody(), true);
+    }
+
+    public function createUser($name, $job)
+    {
+        $response = $this->client->post('users', [
+            'json' => [
+                'name' => $name,
+                'job' => $job,
+            ],
+        ]);
+
+        return json_decode($response->getBody(), true);
+    }
+
+    public function updateUser($id, $name, $job)
+    {
+        $response = $this->client->put("users/{$id}", [
+            'json' => [
+                'name' => $name,
+                'job' => $job,
+            ],
+        ]);
+
+        return json_decode($response->getBody(), true);
+    }
+
+    public function deleteUser($id)
+    {
+        $response = $this->client->delete("users/{$id}");
+
+        return $response->getStatusCode() === 204;
+    }
+
 }

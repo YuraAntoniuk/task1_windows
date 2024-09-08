@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|regex:/^[a-zA-Zа-яА-ЯіїєґІЇЄҐ0-9\(\)\.\-\_\,\@]+$/',
+            'title' => 'required|string|max:50|unique:products|regex:/^[a-zA-Zа-яА-ЯіїєґІЇЄҐ0-9\(\)\.\-\_\,\@]+$/',
             'description' => 'required|string',
             'price' => 'required|integer',
             'category_id' => 'required|integer',
@@ -37,6 +37,8 @@ class StoreRequest extends FormRequest
         return [
             'title.regex' => 'Title contains prohibited characters',
             'title.required' => 'Title must be filled',
+            'title.max' => 'Title must be less than 50',
+            'title.unique' => 'Title must be unique',
             'description.required' => 'Description must be filled',
             'price.required' => 'Description must be filled',
             'category_id.required' => 'Category must be selected',

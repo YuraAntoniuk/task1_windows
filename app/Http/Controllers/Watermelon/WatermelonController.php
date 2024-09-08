@@ -8,91 +8,69 @@ use App\Http\Requests\Watermelon\UpdateRequest;
 use App\Models\Category;
 use App\Models\Watermelon;
 use Illuminate\Http\Request;
+use App\Services\ApiService;
 
 class WatermelonController extends Controller
 {
+
+    protected $apiService;
+
     /**
      * Display a listing of the resource.
      */
+    public function __construct(ApiService $apiService)
+    {
+        $this->apiService = $apiService;
+    }
+
     public function index()
     {
-        $watermelons = Watermelon::all();
-        $categories = Category::all();
-        return view('watermelon.index', compact('watermelons', 'categories'));
+        $users = $this->apiService->getUsers();
+
+        return view('watermelon.index', compact('users'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
+    public function show($id)
+    {
+        $user = $this->apiService->getUser($id);
+
+        return view('watermelon.show', compact('user'));
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->only(['name', 'job']);
+        $user = $this->apiService->createUser($data['name'], $data['job']);
+
+        return redirect()->route('watermelon.show', ['id' => $user['id']]);
+    }
     public function create()
     {
-        $categories = Category::all();
-        return view('watermelon.create', compact('categories'));
+        return view('watermelon.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreRequest $request)
+    public function edit($id)
     {
-        $data = $request->validated();
-        Watermelon::firstOrCreate($data);
+        $user = $this->apiService->getUser($id);
+
+        return view('watermelon.edit', compact('user'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->only(['name', 'job']);
+        $this->apiService->updateUser($id, $data['name'], $data['job']);
 
         return redirect()->route('watermelon.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Watermelon $watermelon)
+    public function destroy($id)
     {
-        return view('watermelon.show', compact('watermelon'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Watermelon $watermelon)
-    {
-        return view('watermelon.edit', compact('watermelon'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateRequest $request, Watermelon $watermelon)
-    {
-        $data = $request->validated();
-        $watermelon->update($data);
-
-        return view('watermelon.show', compact('watermelon'));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Watermelon $watermelon)
-    {
-        $watermelon->delete();
+        $this->apiService->deleteUser($id);
         return redirect()->route('watermelon.index');
     }
-
-    public function bulk(Request $request)
-    {
-        $selectedValues = $request->input('checkboxes');
-        foreach ($selectedValues as $value){
-            Watermelon::destroy($value);
-        }
-        return redirect()->route('watermelon.index');
-    }
-
-    public function subcategory(Request $request)
-    {
-        $id = $request->input('data');
-        return response()->json([
-            'subcategories' => Category::where('parent_id', $id)->get()
-        ]);
-    }
-
-
 }
+

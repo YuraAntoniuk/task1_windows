@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            '*.title' => 'required|string|regex:/^[a-zA-Zа-яА-ЯіїєґІЇЄҐ0-9\(\)\.\-\_\,\@]+$/',
+            '*.title' => 'required|unique:categories|max:30|string|regex:/^[a-zA-Zа-яА-ЯіїєґІЇЄҐ0-9\(\)\.\-\_\,\@]+$/',
             '*.parent_id' => 'nullable|integer',
         ];
     }
@@ -34,6 +34,9 @@ class StoreRequest extends FormRequest
         return [
             '*.title.regex' => 'Title contains prohibited characters',
             '*.title.required' => 'Title must be filled',
+            '*.title.unique' => 'Title must be unique',
+            '*.title.max' => 'Title must be less than 30 symbols',
+            '*.title.string' => 'Title must be string',
         ];
     }
 
