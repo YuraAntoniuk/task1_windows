@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Facebook\FacebookController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -30,4 +31,7 @@ Route::put('/watermelon/{id}', [\App\Http\Controllers\Watermelon\WatermelonContr
 Route::delete('/watermelon/{id}', [\App\Http\Controllers\Watermelon\WatermelonController::class, 'destroy'])->name('watermelon.destroy');
 Route::get('/dashboard', function (){})->middleware('auth');
 
-Route::post('/facebook/post', [\App\Http\Controllers\Facebook\FacebookPageController::class, 'createPost'])->name('facebook.createPost');
+Route::get('/facebook/redirect', [FacebookController::class, 'redirect'])->name('facebook.redirect');
+Route::get('/facebook/callback', [FacebookController::class, 'handleCallback'])->name('facebook.callback');
+Route::get('/facebook/posts', [FacebookController::class, 'showPosts'])->name('facebook.posts');
+Route::post('/facebook/post', [FacebookController::class, 'createPost'])->name('facebook.createPost');
