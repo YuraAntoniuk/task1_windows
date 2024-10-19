@@ -21,7 +21,7 @@ class PostRepository implements PostRepositoryInterface
     public function __construct()
     {
         $this->base_url = 'https://graph.facebook.com/';
-        $this->page_id = 'your_facebook_page_id';
+        $this->page_id = config('services.facebook.page_id');
         $this->app_id = config('services.facebook.client_id');
         $this->secret = config('services.facebook.client_secret');
     }
