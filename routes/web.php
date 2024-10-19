@@ -34,4 +34,6 @@ Route::get('/dashboard', function (){})->middleware('auth');
 Route::get('/auth/facebook', [FacebookController::class, 'redirect'])->name('facebook.redirect');
 Route::get('/auth/facebook/callback', [FacebookController::class, 'handleCallback'])->name('facebook.callback');
 Route::get('/facebook/posts', [FacebookController::class, 'showPosts'])->name('facebook.posts');
-Route::post('/facebook/post', [FacebookController::class, 'createPost'])->name('facebook.createPost');
+Route::get('/facebook/post-create', [FacebookController::class, 'createPost'])->name('facebook.postCreate');
+Route::get('/facebook/photos-create', [FacebookController::class, 'createPhotos'])->name('facebook.photoCreate');
+Route::post('/facebook/post', [FacebookController::class, 'storePost'])->name('facebook.publishPost');

@@ -12,8 +12,8 @@
     </div>
     <div class="container-fluid">
         <div class="card-header">
-            <a href="{{route('facebook.create')}}" class="btn btn-primary">Add</a>
-            <a href="{{route('facebook.upload')}}" class="btn btn-warning">Upload photos</a>
+            <a href="{{route('facebook.postCreate')}}" class="btn btn-primary">Add</a>
+            <a href="{{route('facebook.photoCreate')}}" class="btn btn-warning">Upload photos</a>
         </div><br>
     </div>
     <!-- /.content-header -->

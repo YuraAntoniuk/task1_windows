@@ -56,7 +56,12 @@ class FacebookController extends Controller
         }
     }
 
-    public function createPost(Request $request)
+    public function createPost()
+    {
+        return view('facebook.create');
+    }
+
+    public function storePost(Request $request)
     {
         try {
             // Get the post message from the request
@@ -70,4 +75,11 @@ class FacebookController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function createPhotos()
+    {
+        return view('facebook.upload');
+    }
+
+
 }
