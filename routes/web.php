@@ -30,3 +30,4 @@ Route::put('/watermelon/{id}', [\App\Http\Controllers\Watermelon\WatermelonContr
 Route::delete('/watermelon/{id}', [\App\Http\Controllers\Watermelon\WatermelonController::class, 'destroy'])->name('watermelon.destroy');
 Route::get('/dashboard', function (){})->middleware('auth');
 
+Route::post('/facebook/post', [\App\Http\Controllers\Facebook\FacebookPageController::class, 'createPost'])->name('facebook.createPost');
