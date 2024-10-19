@@ -88,7 +88,7 @@ class PostRepository implements PostRepositoryInterface
         return $data->data ?? [];
     }
 
-    public function createPost($data, $imagePaths)
+    public function createPost($data)
     {
 
         $this->getPageToken();
@@ -140,10 +140,31 @@ class PostRepository implements PostRepositoryInterface
         // TODO: Implement updatePost() method.
     }
 
-    public function uploadImage($imagePaths)
+    public function uploadImages($imagePaths)
     {
         $this->getPageToken();
 
+        $uploadedMediaIds = [];
+        foreach ($imagePaths as $imagePath) {
+            $url = $this->base_url . $this->page_id . '/photos';
+            $payload = [
+                'access_token' => $this->page_token,
+                'published' => true,
+            ];
 
+            $response = Http::attach(
+                'source', fopen($imagePath, 'r'), basename($imagePath)
+            )->post($url, $payload);
+
+            if ($response->successful()) {
+                $data = $response->json();
+                if (isset($data['id'])) {
+                    $uploadedMediaIds[] = ['media_fbid' => $data['id']];
+                }
+            } else {
+                throw new \Exception('Failed to upload image: ' . $response->body());
+            }
+        }
+        return $uploadedMediaIds;
     }
 }

@@ -68,9 +68,9 @@ class FacebookController extends Controller
             $message = $request->input('message');
 
             // Create the post using the repository
-            $post = $this->postRepository->createPost($message);
+            $this->postRepository->createPost($message);
 
-            return response()->json(['success' => true, 'post' => $post]);
+            return redirect()->route('facebook.posts');
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -79,6 +79,20 @@ class FacebookController extends Controller
     public function createPhotos()
     {
         return view('facebook.upload');
+    }
+
+    public function uploadPhoto(Request $request)
+    {
+        try {
+            $imagePaths = [];
+            foreach ($request->file('images') as $image) {
+                $imagePaths[] = $image->getPathname();
+            }
+            $this->postRepository->uploadImages($imagePaths);
+            return redirect()->route('facebook.posts');
+        }catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     public function deletePost($post_id)

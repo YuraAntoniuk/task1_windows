@@ -12,11 +12,11 @@ interface PostRepositoryInterface
 
     public function getPosts();
 
-    public function createPost($data,$imagePaths);
+    public function createPost($data);
 
     public function deletePost($post_id);
 
     public function updatePost($id, $content);
 
-    public function uploadImage($imagePaths);
+    public function uploadImages($imagePaths);
 }

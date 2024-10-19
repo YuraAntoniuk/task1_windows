@@ -18,7 +18,7 @@
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
-                <form action="{{route('facebook.publish')}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('facebook.photoUpload')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group w-25 mx-auto">
                         <input type="file" name="images[]" class="form-control" placeholder="Choose file" multiple><br>
