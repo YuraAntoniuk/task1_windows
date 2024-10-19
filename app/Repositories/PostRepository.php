@@ -16,7 +16,7 @@ class PostRepository implements PostRepositoryInterface
 
     public function __construct()
     {
-        $this->base_url = 'https://graph.facebook.com/';
+        $this->base_url = 'https://graph.facebook.com/v21.0/';
         $this->page_id = config('services.facebook.page_id');
         $this->app_id = config('services.facebook.client_id');
         $this->secret = config('services.facebook.client_secret');
@@ -80,13 +80,11 @@ class PostRepository implements PostRepositoryInterface
     public function getPosts()
     {
         $this->getPageToken();
-
         $url = $this->base_url . $this->page_id . '/posts?access_token=' . $this->page_token;
 
         $response = Http::get($url);
 
         $data = json_decode($response->body());
-
         return $data->data ?? [];
     }
 
