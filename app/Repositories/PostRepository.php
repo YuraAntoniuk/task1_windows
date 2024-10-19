@@ -112,9 +112,27 @@ class PostRepository implements PostRepositoryInterface
         }
     }
 
-    public function deletePost($id)
+    public function deletePost($post_id)
     {
-        // TODO: Implement deletePost() method.
+        $this->getPageToken();
+        try {
+            // Build the URL for the DELETE request
+            $url = $this->base_url.$post_id.'?access_token='.$this->page_token;
+
+            // Make the DELETE request
+            $response = Http::delete($url);
+
+            // Check if the deletion was successful
+            if ($response->successful()) {
+                return response()->json(['message' => 'Post deleted successfully']);
+            } else {
+                return response()->json(['error' => 'Failed to delete post'], $response->status());
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function updatePost($id, $content)
@@ -124,6 +142,8 @@ class PostRepository implements PostRepositoryInterface
 
     public function uploadImage($imagePaths)
     {
-        // TODO: Implement uploadImage() method.
+        $this->getPageToken();
+
+
     }
 }

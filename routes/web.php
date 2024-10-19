@@ -37,3 +37,4 @@ Route::get('/facebook/posts', [FacebookController::class, 'showPosts'])->name('f
 Route::get('/facebook/post-create', [FacebookController::class, 'createPost'])->name('facebook.postCreate');
 Route::get('/facebook/photos-create', [FacebookController::class, 'createPhotos'])->name('facebook.photoCreate');
 Route::post('/facebook/post', [FacebookController::class, 'storePost'])->name('facebook.publishPost');
+Route::delete('/facebook/post-delete', [FacebookController::class, 'deletePost'])->name('facebook.deletePost');

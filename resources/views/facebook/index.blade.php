@@ -29,7 +29,7 @@
                         <p>{{$post->message}}</p>
                     @endif
                 </div>
-                <form id="delete_form" action="{{route('facebook.delete', $post->id)}}" method="post">
+                <form id="delete_form" action="{{route('facebook.deletePost', $post->id)}}" method="post">
                     @csrf
                     @method('delete')
                     <input type="submit" class="btn btn-danger" value="Delete">

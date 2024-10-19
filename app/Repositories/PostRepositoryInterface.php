@@ -14,7 +14,7 @@ interface PostRepositoryInterface
 
     public function createPost($data,$imagePaths);
 
-    public function deletePost($id);
+    public function deletePost($post_id);
 
     public function updatePost($id, $content);
 

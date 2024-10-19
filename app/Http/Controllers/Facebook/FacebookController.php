@@ -81,5 +81,10 @@ class FacebookController extends Controller
         return view('facebook.upload');
     }
 
+    public function deletePost($post_id)
+    {
+        return $this->postRepository->deletePost($post_id);
+    }
+
 
 }
