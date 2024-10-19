@@ -14,11 +14,6 @@ class PostRepository implements PostRepositoryInterface
     protected $secret;
     protected $page_token;
 
-    public function proccesAccessToken($userToken)
-    {
-        // TODO: Implement proccesAccessToken() method.
-    }
-
     public function __construct()
     {
         $this->base_url = 'https://graph.facebook.com/';
@@ -26,6 +21,38 @@ class PostRepository implements PostRepositoryInterface
         $this->app_id = config('services.facebook.client_id');
         $this->secret = config('services.facebook.client_secret');
     }
+    public function proccesAccessToken($userToken)
+    {
+        $long_lived_user_token_url = $this->base_url.'oauth/access_token?grant_type=fb_exchange_token&client_id='.$this->app_id.'&client_secret='.$this->secret.'&fb_exchange_token='.$userToken;
+
+        $user_token_response = Http::get($long_lived_user_token_url);
+
+        if (!$user_token_response->successful()) {
+            \Log::error('Error retrieving long-lived user token: ' . $user_token_response->body());
+            throw new \Exception('Error retrieving long-lived user token');
+        }
+
+        $user_token_response = $user_token_response->json();
+
+        // Get page token
+        $page_token_url = $this->base_url.$this->page_id.'?fields=access_token&access_token='.$user_token_response['access_token'];
+
+        $page_token_response = Http::get($page_token_url);
+
+        if (!$page_token_response->successful()) {
+            \Log::error('Error retrieving page token: ' . $page_token_response->body());
+            throw new \Exception('Error retrieving page token');
+        }
+
+        $page_token_response = $page_token_response->json();
+
+        // Set and return the page token
+        $this->setPageToken($page_token_response['access_token']);
+
+        return $this->page_token;
+    }
+
+
 
     public function setPageToken($token)
     {
@@ -65,7 +92,26 @@ class PostRepository implements PostRepositoryInterface
 
     public function createPost($data, $imagePaths)
     {
-        // TODO: Implement createPost() method.
+
+        $this->getPageToken();
+        $url = $this->base_url . $this->page_id . '/feed';
+
+        // Prepare the payload (the post content)
+        $payload = [
+            'message' => $data,          // The post message
+            'access_token' => $this->page_token  // Page token for authorization
+        ];
+
+        // Send POST request to Facebook API to create the post
+        $response = Http::post($url, $payload);
+
+        // Handle the response and return
+        if ($response->successful()) {
+            return $response->json();
+        } else {
+            \Log::error('Error creating Facebook post: ' . $response->body());
+            throw new \Exception('Failed to create post: ' . $response->body());
+        }
     }
 
     public function deletePost($id)
