@@ -37,7 +37,6 @@ class FacebookController extends Controller
 
             // Process the access token through the repository
             $this->postRepository->processAccessToken($user->token);
-
             // Once tokens are processed, get posts using the repository
             return redirect()->route('facebook.posts');
         } catch (\Exception $e) {

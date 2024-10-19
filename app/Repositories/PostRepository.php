@@ -80,7 +80,7 @@ class PostRepository implements PostRepositoryInterface
     public function getPosts()
     {
         $this->getPageToken();
-        $url = $this->base_url . $this->page_id . '/posts?access_token=' . $this->page_token;
+        $url = $this->base_url.$this->page_id.'/posts?access_token='.$this->page_token;
 
         $response = Http::get($url);
 
