@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 interface PostRepositoryInterface
 {
-    public function proccesAccessToken($userToken);
+    public function processAccessToken($userToken);
 
     public function setPageToken($token);
 
