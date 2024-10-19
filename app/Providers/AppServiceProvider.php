@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\PostRepository;
+use App\Repositories\PostRepositoryInterface;
 use App\Repositories\ProductRepository;
 use App\Repositories\ProductRepositoryInterface;
 use App\Services\ProductService;
@@ -19,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ProductService::class, function ($app){
             return new  ProductService($app->make(ProductRepositoryInterface::class));
         });
+        $this->app->bind(PostRepositoryInterface::class,PostRepository::class);
+
     }
 
     /*

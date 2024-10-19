@@ -45,6 +45,18 @@ class FacebookController extends Controller
         }
     }
 
+    public function showPosts()
+    {
+        try {
+            $posts = $this->postRepository->getPosts();
+
+            // Pass posts to the view
+            return view('facebook.index', compact('posts'));
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
     public function createPost(Request $request)
     {
         try {

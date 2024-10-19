@@ -31,7 +31,7 @@ Route::put('/watermelon/{id}', [\App\Http\Controllers\Watermelon\WatermelonContr
 Route::delete('/watermelon/{id}', [\App\Http\Controllers\Watermelon\WatermelonController::class, 'destroy'])->name('watermelon.destroy');
 Route::get('/dashboard', function (){})->middleware('auth');
 
-Route::get('/facebook/redirect', [FacebookController::class, 'redirect'])->name('facebook.redirect');
-Route::get('/facebook/callback', [FacebookController::class, 'handleCallback'])->name('facebook.callback');
+Route::get('/auth/facebook', [FacebookController::class, 'redirect'])->name('facebook.redirect');
+Route::get('/auth/facebook/callback', [FacebookController::class, 'handleCallback'])->name('facebook.callback');
 Route::get('/facebook/posts', [FacebookController::class, 'showPosts'])->name('facebook.posts');
 Route::post('/facebook/post', [FacebookController::class, 'createPost'])->name('facebook.createPost');

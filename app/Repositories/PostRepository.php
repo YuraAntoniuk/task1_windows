@@ -21,7 +21,7 @@ class PostRepository implements PostRepositoryInterface
         $this->app_id = config('services.facebook.client_id');
         $this->secret = config('services.facebook.client_secret');
     }
-    public function proccesAccessToken($userToken)
+    public function processAccessToken($userToken)
     {
         $long_lived_user_token_url = $this->base_url.'oauth/access_token?grant_type=fb_exchange_token&client_id='.$this->app_id.'&client_secret='.$this->secret.'&fb_exchange_token='.$userToken;
 
