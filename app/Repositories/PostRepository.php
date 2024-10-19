@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Repositories\PostRepositoryInterface;
+use Illuminate\Support\Facades\Http;
 
 class PostRepository implements PostRepositoryInterface
 {
@@ -28,17 +29,38 @@ class PostRepository implements PostRepositoryInterface
 
     public function setPageToken($token)
     {
-        // TODO: Implement setPageToken() method.
+        \Log::info('Setting page token: ' . $token);
+
+        // Store the token in session for persistence
+        session(['facebook_page_token' => $token]);
+
+        $this->page_token = $token;
     }
 
     public function getPageToken()
     {
-        // TODO: Implement getPageToken() method.
+        if (!$this->page_token) {
+            $this->page_token = session('facebook_page_token');
+
+            // If there's still no token, log an error and throw an exception
+            if (!$this->page_token) {
+                \Log::error('Page token not found');
+                throw new \Exception('Page token is missing.');
+            }
+        }
     }
 
     public function getPosts()
     {
-        // TODO: Implement getPosts() method.
+        $this->getPageToken();
+
+        $url = $this->base_url . $this->page_id . '/posts?access_token=' . $this->page_token;
+
+        $response = Http::get($url);
+
+        $data = json_decode($response->body());
+
+        return $data->data ?? [];
     }
 
     public function createPost($data, $imagePaths)
